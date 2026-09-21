@@ -1,16 +1,14 @@
-Goal: Using the lab code as a skeleton, an adaptation code will be written to accept commands from the simulation, or through the code manually. 
-The simulation will also interact with Scorbase to make position adjustments before moving into pick up or place a pallet in any given circumstance.
+Goal: Using the lab code as a skeleton, an adaptation code will be written to accept commands from the analytics engine, or through the code manually. 
+The analytics engine will also interact with Scorbase to make position adjustments before moving into pick up or place a pallet in any given circumstance.
 
 Objectives:
 - Integrate command receiver using device id's for command type - low priority
-- Setup a general run to be used separate from the command receiver - done
-- formulate a subroutine to send coordinates to simulation for checking point and/or animation - done
-- Implement a Scorbase adjustment sent in from the simulation after the coordinate check - done* (simulation may need extra information like command information or what the position is meant to be)
-- Integrate the RFID output into sent data to the simulation - (ryan is working on this)
+- Setup a General Routine to be used separate from the command receiver - done* (Not yet lab tested)
+- formulate a subroutine to send coordinates to analytics engine for checking point and/or animation - done
+- Implement a Scorbase adjustment sent in from the analytics engine after the coordinate check - done
+- Integrate the RFID output into sent data to the analytics engine - (ryan is working on this)
 
 Project Notes (for building):
-
-- In case of placement of attempt of placement of template on pallet without the pallet, have it move to RFID again to confirm if the template is still there (unless we have something that tells us if a pallet is ready for us)
 
 - The skeleton code this is built off of is very picky on how you do things. 
 Notes:	- only use subroutine (labels outside a subroutine break everything else)
@@ -32,8 +30,8 @@ Project Notes (for User)
 
 - Keep everything in the same folder and place this CommunicationFiles_V2 folder into Intelitek>Projects>ASRS_36u since that is how they are based. They will be adapted later as understanding improves on how the lab file paths are set up.
 
-- Auto generated code from pick-place command will not save with the rest of the document and will revert back to calling initalization when reopened (whether you save or not), so keep anything permenant out of the $ Remarks
+- Auto generated code from pick-place command will not save with the rest of the document and will revert back to calling initalization when reopened (whether you save or not), so keep anything permanent out of the $ Remarks
 
-- Command Reciever is still a work in progress and so you cannot currently send commands from the simulation
+- Command Receiver is still a work in progress and so you cannot currently send commands from the analytics engine
 
 - Otherwise GLHF, I will update this folder as needed and try to keep this file up to date with new info.
