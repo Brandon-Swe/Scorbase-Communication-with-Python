@@ -1,0 +1,75 @@
+Remark: $ Beginning of automatically generated code
+Call Subroutine INITC
+End
+Remark: $ End of automatically generated code
+Remark: ******************************************************************************************************
+Remark: Position 101 is the position for cell 1 of Right Side and must be recorded.
+Remark: Position 201 is the position for cell 1 of Left Side and must be recorded.
+Remark: ******************************************************************************************************
+Set Subroutine INITC
+Ring Bell
+Ring Bell
+Ring Bell
+Control On
+Return from Subroutine
+
+Set Subroutine GET210
+Print to Screen: Get template from ASRS1
+
+Set Subroutine PUT210
+Print to Screen: Place template into ASRS-36.
+
+Set Subroutine GET001
+Print to Screen: Get template from conveyor.
+
+Set Subroutine PUT001
+Print to Screen: Place template on the conveyor.
+
+Set Subroutine GET012
+Print to Screen: Get template from RFID
+
+Set Subroutine PUT012
+Print to Screen: Place template on the RFID
+
+Set Subroutine CALC_CELL_POSITION
+Remark: Position 110 is the calculated position for the required cell.
+Set Variable TEMP  = CELL_NUMBER - 1
+If CELL_NUMBER < 37 Jump to CONT2
+Set Variable TEMP  = CELL_NUMBER - 37
+CONT2:
+Set Variable ROW_INDEX  = TEMP \ 6
+Set Variable COLUMN_INDEX  = TEMP MOD 6
+Set Variable CURRENT_X  = -CELLS_DELTA_X * COLUMN_INDEX
+Set Variable CURRENT_Z  = CELLS_DELTA_Z * ROW_INDEX
+Teach Position 110 by Joints. Relative to: BASE_POSITION. Coordinates: CURRENT_X CURRENT_Z 0 0 0
+Return from Subroutine
+
+Set Subroutine RIGHT_ONCE
+Set Variable BASE_POSITION  = 101
+Set Variable X to the Axis 1 Joint Value at Position BASE_POSITION
+Set Variable Y to the Axis 3 Joint Value at Position BASE_POSITION
+Set Variable Z to the Axis 2 Joint Value at Position BASE_POSITION
+Set Variable ROLL to the Axis 4 Joint Value at Position BASE_POSITION
+Set Variable CELLS_DELTA_X  = 19400
+Set Variable CELLS_DELTA_Z  = 14500
+Set Variable DELTA_Y  = -Y + 72
+Set Variable DELTA_Z  = 5000
+Teach Position 111 by Joints. Relative to: 110. Coordinates: 0 0 DELTA_Y 0 0
+Teach Position 112 by Joints. Relative to: 110. Coordinates: 0 DELTA_Z 0 0 0
+Teach Position 113 by Joints. Relative to: 110. Coordinates: 0 DELTA_Z DELTA_Y 0 0
+Return from Subroutine
+Remark: ******************************************************************************************************
+Set Subroutine LEFT_ONCE
+Set Variable BASE_POSITION  = 201
+Set Variable X to the Axis 1 Joint Value at Position BASE_POSITION
+Set Variable Y to the Axis 3 Joint Value at Position BASE_POSITION
+Set Variable Z to the Axis 2 Joint Value at Position BASE_POSITION
+Set Variable ROLL to the Axis 4 Joint Value at Position BASE_POSITION
+Set Variable CELLS_DELTA_X  = 19400
+Set Variable CELLS_DELTA_Z  = 14500
+Set Variable DELTA_Y  = -Y + 72
+Set Variable DELTA_Z  = 5000
+Teach Position 111 by Joints. Relative to: 110. Coordinates: 0 0 DELTA_Y 0 0
+Teach Position 112 by Joints. Relative to: 110. Coordinates: 0 DELTA_Z 0 0 0
+Teach Position 113 by Joints. Relative to: 110. Coordinates: 0 DELTA_Z DELTA_Y 0 0
+Return from Subroutine
