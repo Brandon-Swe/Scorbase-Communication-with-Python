@@ -21,15 +21,15 @@ File Breakdown:
 - ASRSx2-ScorbaseToPythonV2.PNT : This holds the defined position information
 - ASRSx2-ScorbaseToPythonV2.SBP : This holds the code itself
 - ASRSx2-ScorbaseToPythonV2.WS	: This holds the glue that brings it all together (You open this one when loading Scorbase)
-- commandSend.vbs		: This holds the command information from python and an interaction variable for both sides to see
-- General_routines.jpg		: A sketch of how the interchanges in the general routine operate
-- New_Command.vbs		: Scorbase uses this code to write to the commandSend.vbs file in order to tell python it is done running a command
-- NewPoint.vbs			: Points taken from Scorbase to go to python and also the other way around too
-- pointChecker.py		: In charge of taking points from Scorbase and sending back adjusted ones to Scorbase (currently only sends a random position back)
+- commandSend.vbs				: This holds the command information from python and an interaction variable for both sides to see
+- General_routines.jpg			: A sketch of how the interchanges in the general routine operate
+- New_Command.vbs				: Scorbase uses this code to write to the commandSend.vbs file in order to tell python it is done running a command
+- NewPoint.vbs					: Points taken from Scorbase to go to python and also the other way around too
+- pointChecker.py				: In charge of taking points from Scorbase and sending back adjusted ones to Scorbase (currently only sends a random position back)
 - Project Notes and Objectives  : A bunch of scattered notes I made for myself when programing this system. View at your own risk.
-- README.txt			: Documentaion for how this communication is meant to work (i.e. what your reading now)
+- README.txt					: Documentaion for how this communication is meant to work (i.e. what your reading now)
 - Scorbase Command Sender.py	: For sending commands from python to scorbase (see documentation below for how to use it)
-- SendPoint.vbs			: For sending a point from Scorbase to vbs (that will then get picked up by the pointChecker.py file)
+- SendPoint.vbs					: For sending a point from Scorbase to vbs (that will then get picked up by the pointChecker.py file)
 
 
 - Digital Inputs: To utilize these, first show them through View>Dialog Bars>Digital Inputs. This will show a set of darkened green boxes numbering 1-8. Clicking them now does not do anything (may do something if in lab), so for the ones you want to change, right click them and press "Force". The text should turn red and you will be able to click it to toggle it on or off. As of now 3 are used: 1 - Command Receiver, 2 - General Routine, 3 - End the program
