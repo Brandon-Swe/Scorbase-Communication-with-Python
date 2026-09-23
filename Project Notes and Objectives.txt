@@ -1,0 +1,32 @@
+Note: This is for my viewing and note taking purposes. Refer to the README file for operation instructions
+
+Goal: Using the lab code as a skeleton, an adaptation code will be written to accept commands from the analytics engine, or through the code manually. 
+The analytics engine will also interact with Scorbase to make position adjustments before moving into pick up or place a pallet in any given circumstance.
+
+Objectives:
+- Integrate command receiver using device id's for command type - done
+- Create command success notification along with command receiver
+- Setup a general run to be used separate from the command receiver - done
+- formulate a subroutine to send coordinates to analytics engine (use the example code in ER4U that sends them to excel) - done
+- Implement a Scorbase adjustment subroutine sent in from the analytics engine after the coordinate sending - done
+- Integrate the RFID output into sent data to the analytics engine - low priority (ryan is working on this) - making it a lab problem
+
+Project Notes:
+
+- for the coordinate sending, I could utilize the way the example codes grabs sends all the info by invoking a subroutine to do the same except instead of adding it to an excel sheet, have it write the info into a vbs program which the analytics engine could pick up the numbers and change them to a new set of numbers if adjustment is needed. An extra variable for each side to check will be need as well to keep from one overwriting the other. (done)
+	- Possible Improvements: Currently when the subroutine is called, it only sends one point as it moves on from one position to the next. If the code lingers on the "Go to # Position" as it moves to that position, it will not work, but if it moves on while executing it (to get ready for the next command), it might allow me to constantly send the position through the duration of the movement.
+
+- for the general run, I could take a note from the Test2 code that goes to the corners of each side, and take them to the conveyors (taking the template back to their designated spot each time)
+	- Instead I made an "Interchange" system at 3 different levels, where each rotates between places in the ASRS and the conveyor belt
+
+- In case of placement of attempt of placement of template on pallet without the pallet, have it move to RFID again to confirm if the template is still there (unless we have something that tells us if a pallet is ready for us)
+
+- The skeleton code this is built off of is very picky on how you do things. Notes: only use subroutine (labels break everything else), call the subroutine before the "automatically generated code" (i.e. line 1). This is for calls that are needed outside of the subroutines already given
+	- This does not stick. If there is any lines of code before the automated code, even comments, they are placed below it after saving and re-opening the program
+	- The existence of the INITC sub routine seems to generate the auto code
+
+- This code may need to be properly moved to a different file, because it does not support much flexibility in what it allows. Because it moves the autogen code to the top every time, if any movement code is put in that autogen code and there is any sort of code after it, nothing works. This means that the only thing that will work is integrating everything into the INTC subroutine which seems dangerous to mess with. Deleting the autogen code does not help either, it just re-pastes itself back into the program after re-loading. This file will likely have to be kept for a while longer although until I can fully grasp why it does what it does, because if there are things like this autogen code occurring in the background, who's to say what else might be occurring in the background that could break if I were to make this into a separate program. 
+	- Worked around it for now (put everything in the INTC code after all so we'll see how that goes)
+
+- For the command receiver, should be able to just adjust the current V1 python setup and change the names. Scorbase can be done similarly, but will still need to make it from scratch, given the number of differences between code layouts. Within Scorbase, best to make it into a subroutine (like with point sender/checker) that it is sent to after initialization (INITC subroutine). Do not have quite the full picture with how openCIM works, so may still have to change it again in the future. Might be worth using digital inputs to keep program from starting immediately (even if it is only looping), so we can control when it starts. That also includes the general routine. (Idea: DI 1 for command receiver, DI 2 for general routine, DI 3 for code end, etc.)
+	- done and done
