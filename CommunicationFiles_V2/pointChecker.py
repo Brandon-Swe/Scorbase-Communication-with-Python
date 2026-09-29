@@ -1,6 +1,14 @@
 
 # This file is meant for recieving and sending back points 
-#   (The actual adjustments will be done by the simulation, so this just to recieve and send back)
+#   (The actual adjustments will be done by the analytics engine, so this just to recieve and send back)
+
+# What it reads and writes to looks like this:
+# fromScor = --
+# x = --
+# y = --
+# z = --
+# roll = --
+
 
 def pointCatch():
    
@@ -17,7 +25,7 @@ def pointCatch():
             continue
         else:
             tempList = coord.split(" = ")
-            tempList[1] = int(tempList[1])      #turning the string numbers to integers
+            tempList[1] = int(tempList[1])      # turning the string numbers to integers
             pointList.append(tempList)
 
     return(pointList)
@@ -28,7 +36,8 @@ def PointSender(argPoint):
 
     with open("NewPoint.vbs", "w") as pointWrite:
        for coord in argPoint:
-           pointWrite.write(coord[0] + " = " + str(coord[1]) + "\n") # rewrites to the vbs file
+           # rewrites the new coordinates to the vbs file
+           pointWrite.write(coord[0] + " = " + str(coord[1]) + "\n") 
 
 point = pointCatch()
 # make the necessary edits to the point and then return it

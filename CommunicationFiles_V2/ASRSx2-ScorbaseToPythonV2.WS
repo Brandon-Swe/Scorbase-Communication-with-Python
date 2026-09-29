@@ -1,9 +1,9 @@
 [General]
 SystemType=236
 ShowLineNum=1
-ShowEnc=0
-ShowAO=0
-ShowAI=0
+ShowEnc=1
+ShowAO=1
+ShowAI=1
 ShowDO=1
 ShowDI=1
 ShowJoint=0

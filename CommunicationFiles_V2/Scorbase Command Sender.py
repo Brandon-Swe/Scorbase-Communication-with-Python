@@ -11,6 +11,8 @@
 #   TARGET_DEVICE_INDEX - ending cell (for conveyor and RFID, always 1; for ASRS, 1-72)
 #   PICK_AND_PLACE_NOTE - not important here
 
+
+# Command dictionary (This defintion is for testing purpose; the actual dictionary will come from the analytics engine)
 command = {
     "TASK_ID": 10000,
     "PART_ID": 0,
@@ -21,14 +23,7 @@ command = {
     "PICK_AND_PLACE_NOTE": 0
 }
 
-# This is reusing the functionality that Send/Check point does to cross check between clients if something is done
-# with open("NewPoint.vbs", "r") as cmdFin:
-#     # may have to make this seperate if Ryan uses a watchfiles setup on this file though
-#     fromScorSTR = "fromScor = "
-#     cmdFinRead = cmdFin.read()
-#     newCmdITR = cmdFinRead.find(fromScorSTR) + len(fromScorSTR)
-#     newCmd = cmdFinRead[newCmdITR]
-
+# Checking if the previous command has been run by Scorbase yet (fromScor = 1: means from scorbase, fromScor = 0: means not from scorbase)
 with open("commandSend.vbs", "r") as cmdFin:
 
     fromScorSTR = "fromScor = "
@@ -39,6 +34,8 @@ with open("commandSend.vbs", "r") as cmdFin:
 overwrite = False       # For testing purporses, can overrite the command by switching this to true
 
 if newCmd == 1 or overwrite:
+    
+    # The command dictionary is written to a VBS file that Scorbase can read
     with open("commandSend.vbs","w") as cmdSend:
         cmdSend.write("fromScor = " + str(0))
         cmdSend.write("\nTASK_ID = " + str(command["TASK_ID"]))
