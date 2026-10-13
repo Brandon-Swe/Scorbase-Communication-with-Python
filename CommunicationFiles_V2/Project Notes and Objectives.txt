@@ -8,6 +8,7 @@ Objectives:
 - Create command success notification along with command receiver
 - Setup a general run to be used separate from the command receiver - done
 - formulate a subroutine to send coordinates to analytics engine (use the example code in ER4U that sends them to excel) - done
+	- use watchfiles to get a list of them to be seen for lab testing
 - Implement a Scorbase adjustment subroutine sent in from the analytics engine after the coordinate sending - done
 - Integrate the RFID output into sent data to the analytics engine - low priority (ryan is working on this) - making it a lab problem
 

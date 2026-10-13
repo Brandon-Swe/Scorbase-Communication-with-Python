@@ -3,7 +3,7 @@ Short Term Goal: The analytics engine will send commands to Scorbase to make pos
 
 Long term Objectives: 
 - Integrate command receiver using device ids for command type - done 
-- Setup a General Routine to be used separate from the command receiver - done* (Not yet lab tested) 
+- Setup a General Routine to be used separate from the command receiver - done
 - Integrate the RFID output into sent data to the analytics engine - (ryan is working on this) 
 
 Short term Objectives:

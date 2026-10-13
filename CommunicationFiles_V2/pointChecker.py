@@ -9,6 +9,9 @@
 # z = --
 # roll = --
 
+from watchfiles import watch
+import threading
+import queue
 
 def pointCatch():
    
@@ -39,10 +42,28 @@ def PointSender(argPoint):
            # rewrites the new coordinates to the vbs file
            pointWrite.write(coord[0] + " = " + str(coord[1]) + "\n") 
 
-point = pointCatch()
+#points = queue.Queue()
+def pointRecord():
+
+    #points = []
+    with open("points.txt", "w") as file:
+        file.write("erased previous points\n")
+
+    for changes in watch("NewPoint.vbs"):
+        #points.append(pointCatch())
+        print("Point Caught")
+        tempPoint = pointCatch()
+        with open("points.txt", "a") as file:   
+            file.write(str(tempPoint))
+            file.write("\n")
+
+threading.Thread(target=pointRecord).start()
+#print(points)
+
+#point = pointCatch()
 # make the necessary edits to the point and then return it
-point[1][1] = 10513
-point[2][1] = 12939
-point[3][1] = 1450
-point[4][1] = 221
-PointSender(point)
+#point[1][1] = 10513
+#point[2][1] = 12939
+#point[3][1] = 1450
+#point[4][1] = 221
+#PointSender(point)

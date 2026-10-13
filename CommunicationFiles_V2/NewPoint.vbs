@@ -1,5 +1,6 @@
-fromScor = 0
-x = 10513
-y = 12939
-z = 1450
-roll = 221
+' This file will be used to send points back and forth between the simulation and Scorbase
+fromScor = 1
+x = 5700
+y = 11000
+z = 0
+roll = 0

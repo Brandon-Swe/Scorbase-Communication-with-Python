@@ -6,7 +6,8 @@ Function New_Command(varCheck)
     
     ' the file path is from \Intelitek\OpenCIM\MICROCIM-DEMO\WS1 to the ASRS project path seen below
     set f = fso.OpenTextFile("..\..\..\Projects\Asrs2_36u\CommunicationFiles_V2\commandSend.vbs", ForWriting, true)
-    
+    ' set f = fso.OpenTextFile("[insert new file path here]\commandSend.vbs", ForWriting, true)
+
     'for checking if the position is from scorbase or python (1 - from scorbase, 0 - from python, -1 - not applicable)
     f.Write "fromScor = " & varCheck
     
