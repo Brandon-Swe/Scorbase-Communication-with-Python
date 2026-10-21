@@ -1,0 +1,387 @@
+Remark: $ Beginning of automatically generated code
+Call Subroutine INITC
+End
+Remark: $ End of automatically generated code
+Remark: ******************************************************************************************************
+Remark: Position 101 is the position for cell 1 of Right Side and must be recorded.
+Remark: Position 201 is the position for cell 1 of Left Side and must be recorded.
+Remark: If you have not already, please read the README text file for operation
+Remark: ******************************************************************************************************
+Remark: If you want to work with the send/check point, comment/delete the "SKIPCHECK" and "SKIPSEND" labels in the respective subroutin
+Set Subroutine INITC
+Ring Bell
+Ring Bell
+Ring Bell
+Control On
+START:
+Wait 10 (10ths of seconds)
+If Input 1 On Call Subroutine COMMAND_RECEIVER
+If Input 2 On Call Subroutine GENERALROUTINE
+If Input 3 On Jump to END
+Jump to START
+END:
+Return from Subroutine
+Remark: ******************************************************************************************************
+Set Subroutine GET210
+Print to Screen: Get template from ASRS1
+Set Variable CELL_NUMBER  = SOURCE_DEVICE_INDEX
+If CELL_NUMBER < 37 Jump to SHELF ON RIGHT SIDE
+Call Subroutine LEFT_ONCE
+Jump to CALCULATE_CELL_POSITION
+SHELF ON RIGHT SIDE:
+Call Subroutine RIGHT_ONCE
+CALCULATE_CELL_POSITION:
+Call Subroutine CALC_CELL_POSITION
+* Control On
+Call Subroutine SENDPOINT
+Go to Position 499 Fast
+Call Subroutine SENDPOINT
+Go to Position 111 Speed 50 (%)
+Call Subroutine CHECKPOS
+Go to Position 110 Speed 50 (%)
+Call Subroutine CHECKPOS
+Go to Position 112 Speed 20 (%)
+Call Subroutine CHECKPOS
+Go to Position 113 Speed 50 (%)
+Send Message $Start to MANAGER  ID=TASK_ID
+Call Subroutine CHECKPOS
+Go to Position 499 Speed 50 (%)
+Call Subroutine CHECKPOS
+Return from Subroutine
+Remark: ******************************************************************************************************
+Set Subroutine PUT210
+Print to Screen: Place template into ASRS-36.
+Set Variable CELL_NUMBER  = TARGET_DEVICE_INDEX
+If CELL_NUMBER < 37 Jump to SHELF ON RIGHT SIDE
+Call Subroutine LEFT_ONCE
+Jump to CALCULATE_CELL_POSITION
+SHELF ON RIGHT SIDE:
+Call Subroutine RIGHT_ONCE
+CALCULATE_CELL_POSITION:
+Call Subroutine CALC_CELL_POSITION
+Call Subroutine SENDPOINT
+Go to Position 499 Fast
+Call Subroutine SENDPOINT
+Go to Position 113 Speed 50 (%)
+Call Subroutine CHECKPOS
+Go to Position 112 Speed 50 (%)
+Call Subroutine CHECKPOS
+Go to Position 110 Speed 20 (%)
+Call Subroutine CHECKPOS
+Go to Position 111 Speed 50 (%)
+Send Message $Finish to MANAGER  ID=TASK_ID
+Call Subroutine CHECKPOS
+Go to Position 499 Fast
+Call Subroutine CHECKPOS
+* Go to Position 497 Fast
+* Wait 5 (10ths of seconds)
+* Control Off
+Send Message $End to MANAGER  ID=TASK_ID
+Return from Subroutine
+Remark: ******************************************************************************************************
+Set Subroutine GET001
+Print to Screen: Get template from conveyor.
+* Control On
+Call Subroutine SENDPOINT
+Go to Position 21 Fast
+Call Subroutine CHECKPOS
+Go to Position 1 Speed 40 (%)
+Call Subroutine CHECKPOS
+Go to Position 11 Speed 20 (%)
+Call Subroutine CHECKPOS
+Wait 5 (10ths of seconds)
+Send Message $Start to MANAGER  ID=TASK_ID
+Go to Position 498 Speed 50 (%)
+Call Subroutine CHECKPOS
+Return from Subroutine
+Remark: ******************************************************************************************************
+Set Subroutine PUT001
+Print to Screen: Place template on the conveyor.
+If SOURCE_DEVICE_ID == 12 Jump to COME FROM RFID
+Call Subroutine SENDPOINT
+Go to Position 499 Speed 50 (%)
+COME FROM RFID:
+Call Subroutine SENDPOINT
+Go to Position 11 Speed 50 (%)
+Call Subroutine CHECKPOS
+Go to Position 1 Speed 20 (%)
+Call Subroutine CHECKPOS
+Go to Position 21 Speed 50 (%)
+Send Message $Finish to MANAGER  ID=TASK_ID
+Call Subroutine CHECKPOS
+Go to Position 499 Fast
+Call Subroutine CHECKPOS
+* Go to Position 497 Fast
+Call Subroutine CHECKPOS
+* Wait 5 (10ths of seconds)
+* Control Off
+Send Message $End to MANAGER  ID=TASK_ID
+Return from Subroutine
+Remark: ******************************************************************************************************
+Set Subroutine GET012
+Call Subroutine SENDPOINT
+Print to Screen: Get template from RFID
+Wait 5 (10ths of seconds)
+Send Message $Start to MANAGER  ID=TASK_ID
+Return from Subroutine
+Remark: ******************************************************************************************************
+Set Subroutine PUT012
+Print to Screen: Place template on the RFID
+Call Subroutine SENDPOINT
+Go to Position 499 Speed 50 (%)
+Call Subroutine CHECKPOS
+Go to Position 20 Speed 50 (%)
+Call Subroutine CHECKPOS
+Wait 5 (10ths of seconds)
+Send Message $Finish to MANAGER  ID=TASK_ID
+Send Message $End to MANAGER  ID=TASK_ID
+Return from Subroutine
+Remark: ******************************************************************************************************
+Set Subroutine CALC_CELL_POSITION
+Remark: Position 110 is the calculated position for the required cell.
+Set Variable TEMP  = CELL_NUMBER - 1
+If CELL_NUMBER < 37 Jump to CONT2
+Set Variable TEMP  = CELL_NUMBER - 37
+CONT2:
+Set Variable ROW_INDEX  = TEMP \ 6
+Set Variable COLUMN_INDEX  = TEMP MOD 6
+Set Variable CURRENT_X  = -CELLS_DELTA_X * COLUMN_INDEX
+Set Variable CURRENT_Z  = CELLS_DELTA_Z * ROW_INDEX
+Teach Position 110 by Joints. Relative to: BASE_POSITION. Coordinates: CURRENT_X CURRENT_Z 0 0 0
+Return from Subroutine
+Remark: ******************************************************************************************************
+Set Subroutine RIGHT_ONCE
+Set Variable BASE_POSITION  = 101
+Set Variable X to the Axis 1 Joint Value at Position BASE_POSITION
+Set Variable Y to the Axis 3 Joint Value at Position BASE_POSITION
+Set Variable Z to the Axis 2 Joint Value at Position BASE_POSITION
+Set Variable ROLL to the Axis 4 Joint Value at Position BASE_POSITION
+Set Variable CELLS_DELTA_X  = 19400
+Set Variable CELLS_DELTA_Z  = 14500
+Set Variable DELTA_Y  = -Y + 72
+Set Variable DELTA_Z  = 5000
+Teach Position 111 by Joints. Relative to: 110. Coordinates: 0 0 DELTA_Y 0 0
+Teach Position 112 by Joints. Relative to: 110. Coordinates: 0 DELTA_Z 0 0 0
+Teach Position 113 by Joints. Relative to: 110. Coordinates: 0 DELTA_Z DELTA_Y 0 0
+Return from Subroutine
+Remark: ******************************************************************************************************
+Set Subroutine LEFT_ONCE
+Set Variable BASE_POSITION  = 201
+Set Variable X to the Axis 1 Joint Value at Position BASE_POSITION
+Set Variable Y to the Axis 3 Joint Value at Position BASE_POSITION
+Set Variable Z to the Axis 2 Joint Value at Position BASE_POSITION
+Set Variable ROLL to the Axis 4 Joint Value at Position BASE_POSITION
+Set Variable CELLS_DELTA_X  = 19400
+Set Variable CELLS_DELTA_Z  = 14500
+Set Variable DELTA_Y  = -Y + 72
+Set Variable DELTA_Z  = 5000
+Teach Position 111 by Joints. Relative to: 110. Coordinates: 0 0 DELTA_Y 0 0
+Teach Position 112 by Joints. Relative to: 110. Coordinates: 0 DELTA_Z 0 0 0
+Teach Position 113 by Joints. Relative to: 110. Coordinates: 0 DELTA_Z DELTA_Y 0 0
+Return from Subroutine
+Remark: ************************************************************************************************************
+Remark: For sending a point when check is needed
+Remark: ************************************************************************************************************
+Set Subroutine CHECKPOS
+* Jump to SKIPCHECK
+Print to Screen: Check Point
+Set Variable P  = 5
+Record Present Position as Position P !
+Remark: Start by sending the point
+Set Variable FROMSCOR  = 1
+Set Variable X to the Cartesian 1 Coordinate at Position P
+Set Variable Y to the Cartesian 2 Coordinate at Position P
+Set Variable Z to the Cartesian 3 Coordinate at Position P
+Set Variable ROLL to the Cartesian 5 Coordinate at Position P
+Load script file: SENDPOINT_SCOR.VBS
+Call Subroutine SCRIPT.SENDPOINT_SCOR(FROMSCOR,X,Y,Z,ROLL)
+Remark: While point is being checked scorbase is placed into a loop
+Jump to SKIPCHECK
+CHECKING:
+Load script file: SENDPOINT_VARTXT.VBS
+Set Variable FROMSCOR  = SCRIPT.FROMSCOR
+Wait 10 (10ths of seconds)
+If FROMSCOR==1 Jump to CHECKING
+Remark: When it exits the loop, It will then readjust to the new postion before returning
+Set Variable X  = SCRIPT.X
+Set Variable Y  = SCRIPT.Y
+Set Variable Z  = SCRIPT.Z
+Set Variable ROLL  = SCRIPT.ROLL
+Print to Screen: X: 'X', Y: 'Y', Z: 'Z', ROLL: 'ROLL'
+Teach Position P by XYZ. Coordinates: X Y Z 0 ROLL
+Go to Position P Speed 50 (%)
+SKIPCHECK:
+Return from Subroutine
+Remark: ************************************************************************************************************
+Remark: For sending a point when check is not needed
+Remark: ************************************************************************************************************
+Set Subroutine SENDPOINT
+* Jump to SKIPSEND
+Print to Screen: Send Point
+Set Variable P  = 5
+Record Present Position as Position P !
+Remark: Start by sending the point
+Set Variable FROMSCOR  = -1
+Set Variable X to the Cartesian 1 Coordinate at Position P
+Set Variable Y to the Cartesian 2 Coordinate at Position P
+Set Variable Z to the Cartesian 3 Coordinate at Position P
+Set Variable ROLL to the Cartesian 5 Coordinate at Position P
+Load script file: SENDPOINT_SCOR.VBS
+Call Subroutine SCRIPT.SENDPOINT_SCOR(FROMSCOR,X,Y,Z,ROLL)
+* SKIPSEND:
+Return from Subroutine
+Remark: ************************************************************************************************************
+Set Subroutine COMMAND_RECEIVER
+Remark: Loop label will wait for command from python to come through before attempting to execute it
+LOOP:
+Load script file: SENDCOMMAND_VARTXT.VBS
+Set Variable FROMSCOR  = SCRIPT.FROMSCOR
+If FROMSCOR == 0 Jump to RUNCOMMAND
+If Input 1 Off Jump to FINISH
+Wait 10 (10ths of seconds)
+Jump to LOOP
+RUNCOMMAND:
+Set Variable TASK_ID  = SCRIPT.TASK_ID
+Set Variable PART_ID  = SCRIPT.PART_ID
+Set Variable SOURCE_DEVICE_ID  = SCRIPT.SOURCE_DEVICE_ID
+Set Variable SOURCE_DEVICE_INDEX  = SCRIPT.SOURCE_DEVICE_INDEX
+Set Variable TARGET_DEVICE_ID  = SCRIPT.TARGET_DEVICE_ID
+Set Variable TARGET_DEVICE_INDEX  = SCRIPT.TARGET_DEVICE_INDEX
+Set Variable PICK_AND_PLACE_NOTE  = SCRIPT.PICK_AND_PLACE_NOTE
+Remark: Get segment: ----------------------------------------------------------------------------------------
+Remark: "GET" 's from the device that source ID specifies
+If SOURCE_DEVICE_ID == 210 Jump to ASRS_GET
+If SOURCE_DEVICE_ID == 12 Jump to RFID_GET
+If SOURCE_DEVICE_ID == 1 Jump to CONV_GET
+ASRS_GET:
+Call Subroutine GET210
+Jump to PUT_SEG
+RFID_GET:
+Call Subroutine GET012
+Jump to PUT_SEG
+CONV_GET:
+Call Subroutine GET001
+Jump to PUT_SEG
+Remark: Put Segment: ----------------------------------------------------------------------------------------
+Remark: "PUT" 's from the device that target ID specifies
+PUT_SEG:
+If TARGET_DEVICE_ID == 210 Jump to ASRS_PUT
+If TARGET_DEVICE_ID == 12 Jump to RFID_PUT
+If TARGET_DEVICE_ID == 1 Jump to CONV_PUT
+ASRS_PUT:
+Call Subroutine PUT210
+Jump to FINISH
+RFID_PUT:
+Call Subroutine PUT012
+Jump to FINISH
+CONV_PUT:
+Call Subroutine PUT001
+Jump to FINISH
+FINISH:
+Remark: Writes to a VBS to tell the python script that Scorbase has finished a command
+Load script file: SENDCOMMAND_SCOR.VBS
+Call Subroutine SCRIPT.SENDCOMMAND_SCOR(1)
+Remark: When a task list is made and the task id's start changing, this will become more relavent
+* Print to Screen & Log: Command 'TASK_ID' Completed
+Return from Subroutine
+Remark: ************************************************************************************************************
+Set Subroutine GENERALROUTINE
+Remark: Three Example Routines (See README for details)
+Remark: All hardcoded commands, so cannot be influenced by the analytic engine save for position adjustment
+Remark: Change following variables to "1" to skip the interchange
+Set Variable SKIP_1X  = 0
+Set Variable SKIP_2X  = 1
+Set Variable SKIP_3X  = 1
+If SKIP_1X == 1 Jump to SKIP_1X
+Remark: * - Example Routine 1: 1x Interchange
+Print to Screen: Starting 1x Interchange
+Set Variable TASK_ID  = 110000
+Set Variable SOURCE_DEVICE_ID  = 210
+Set Variable SOURCE_DEVICE_INDEX  = 15
+Set Variable TARGET_DEVICE_ID  = 1
+Set Variable TARGET_DEVICE_INDEX  = 1
+Call Subroutine GET210
+Call Subroutine PUT001
+Set Variable TASK_ID  = 110000
+Set Variable SOURCE_DEVICE_ID  = 1
+Set Variable SOURCE_DEVICE_INDEX  = 1
+Set Variable TARGET_DEVICE_ID  = 210
+Set Variable TARGET_DEVICE_INDEX  = 15
+Call Subroutine GET001
+Call Subroutine PUT210
+Print to Screen: Single Interchange Complete
+SKIP_1X:
+Remark: --------------------------------------------------------------------------
+If SKIP_2X == 1 Jump to SKIP_2X
+Remark: ** - Example Routine 2: 2x Interchange
+Print to Screen: Starting 2x Interchange
+Set Variable CHANGE  = 0
+2XINTERCHANGE:
+Set Variable CHANGE  = CHANGE + 1
+Print to Screen: # 'CHANGE' Change
+Set Variable TASK_ID  = 110000
+Set Variable SOURCE_DEVICE_ID  = 210
+Set Variable SOURCE_DEVICE_INDEX  = 33
+Set Variable TARGET_DEVICE_ID  = 1
+Set Variable TARGET_DEVICE_INDEX  = 1
+Call Subroutine GET210
+Call Subroutine PUT001
+Set Variable TASK_ID  = 110000
+Set Variable SOURCE_DEVICE_ID  = 210
+Set Variable SOURCE_DEVICE_INDEX  = 39
+Set Variable TARGET_DEVICE_ID  = 210
+Set Variable TARGET_DEVICE_INDEX  = 33
+Call Subroutine GET210
+Call Subroutine PUT210
+Set Variable TASK_ID  = 110000
+Set Variable SOURCE_DEVICE_ID  = 1
+Set Variable SOURCE_DEVICE_INDEX  = 1
+Set Variable TARGET_DEVICE_ID  = 210
+Set Variable TARGET_DEVICE_INDEX  = 39
+Call Subroutine GET001
+Call Subroutine PUT210
+If CHANGE < 2 Jump to 2XINTERCHANGE
+Print to Screen: Double Interchange Complete
+SKIP_2X:
+Remark: --------------------------------------------------------------------------
+If SKIP_3X == 1 Jump to SKIP_3X
+Remark: *** - Example Routine 3: 3x Interchange
+Print to Screen: Starting 3x Interchange
+Set Variable CHANGE  = 0
+3XINTERCHANGE:
+Set Variable CHANGE  = CHANGE + 1
+Print to Screen: # 'CHANGE' Change
+Set Variable TASK_ID  = 110000
+Set Variable SOURCE_DEVICE_ID  = 210
+Set Variable SOURCE_DEVICE_INDEX  = 6
+Set Variable TARGET_DEVICE_ID  = 1
+Set Variable TARGET_DEVICE_INDEX  = 1
+Call Subroutine GET210
+Call Subroutine PUT001
+Set Variable TASK_ID  = 110000
+Set Variable SOURCE_DEVICE_ID  = 210
+Set Variable SOURCE_DEVICE_INDEX  = 54
+Set Variable TARGET_DEVICE_ID  = 210
+Set Variable TARGET_DEVICE_INDEX  = 6
+Call Subroutine GET210
+Call Subroutine PUT210
+Set Variable TASK_ID  = 110000
+Set Variable SOURCE_DEVICE_ID  = 210
+Set Variable SOURCE_DEVICE_INDEX  = 49
+Set Variable TARGET_DEVICE_ID  = 210
+Set Variable TARGET_DEVICE_INDEX  = 54
+Call Subroutine GET210
+Call Subroutine PUT210
+Set Variable TASK_ID  = 110000
+Set Variable SOURCE_DEVICE_ID  = 1
+Set Variable SOURCE_DEVICE_INDEX  = 1
+Set Variable TARGET_DEVICE_ID  = 210
+Set Variable TARGET_DEVICE_INDEX  = 49
+Call Subroutine GET001
+Call Subroutine PUT210
+If CHANGE < 3 Jump to 3XINTERCHANGE
+Print to Screen: Triple Interchange Complete
+SKIP_3X:
+Remark: This to keep the routine from repeating itself
+Wait Until Digital Input 2 is OFF
+Return from Subroutine
