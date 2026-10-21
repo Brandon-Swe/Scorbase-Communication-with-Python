@@ -24,17 +24,17 @@ File Breakdown:
 - ASRSx2-ScorbaseToPythonV2.PNT : This holds the defined position information
 - ASRSx2-ScorbaseToPythonV2.SBP : This holds the code itself
 - ASRSx2-ScorbaseToPythonV2.WS	: This holds the glue that brings it all together (You open this one when loading Scorbase)
-- ExCommand.txt			: An example command to be copied and pasted into the vbs file for testing (does not interact with the code)
-- General_routines.jpg		: A sketch of how the interchanges in the general routine operate
-- points.txt			: A gathering place for all the points sent from scorbase (from both send and check subroutines)
+- ExCommand.txt					: An example command to be copied and pasted into the vbs file for testing (does not interact with the code)
+- General_routines.jpg			: A sketch of how the interchanges in the general routine operate
+- points.txt					: A gathering place for all the points sent from scorbase (from both send and check subroutines)
 - Project Notes and Objectives  : A bunch of scattered notes I made for myself when programing this system. View at your own risk.
-- README.txt			: Documentation for how this communication is meant to work (i.e. what you're reading now)
-- SendCommand_python.py		: For sending commands from python to scorbase (see documentation below for how to use it)
-- SendCommand_Scor.vbs		: Scorbase uses this code to write to the SendCommand_varTxt.vbs file in order to tell python it is done running a command
-- SendCommand_varTxt.vbs	: This holds the command information from python and an interaction variable for both sides to see
-- SendPoint_Scor.vbs		: For sending a point from Scorbase to VBS (that will then get picked up by the pointChecker.py file)
-- SendPoint_python.py		: In charge of taking points from Scorbase and sending back adjusted ones to Scorbase (currently only sends a random position back)
-- SendPoint_varTxt.vbs		: Points taken from Scorbase to go to python and also the other way around too
+- README.txt					: Documentation for how this communication is meant to work (i.e. what you're reading now)
+- SendCommand_python.py			: For sending commands from python to scorbase (see documentation below for how to use it)
+- SendCommand_Scor.vbs			: Scorbase uses this code to write to the SendCommand_varTxt.vbs file in order to tell python it is done running a command
+- SendCommand_varTxt.vbs		: This holds the command information from python and an interaction variable for both sides to see
+- SendPoint_Scor.vbs			: For sending a point from Scorbase to VBS (that will then get picked up by the pointChecker.py file)
+- SendPoint_python.py			: In charge of taking points from Scorbase and sending back adjusted ones to Scorbase (currently only sends a random position back)
+- SendPoint_varTxt.vbs			: Points taken from Scorbase to go to python and also the other way around too
 
 Quick Definitions:
 
